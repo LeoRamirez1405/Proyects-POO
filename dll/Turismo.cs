@@ -2,10 +2,10 @@ namespace Proyecto__02;
 
 public class Turismo:Omnibus,IPrecioPasaje
 {
-    int HoraDeLlegada;
+    public int HoraDeLlegada{get;}
     float precioPasaje;
     public Turismo(int HoraDeLlegada,string chapa,string chofer,
-                string destino,float km, int asientos):
+                Destinos destino,float km, int asientos):
                 base(chapa, chofer,destino,km, asientos)
     {
         this.HoraDeLlegada = HoraDeLlegada;

@@ -1,11 +1,11 @@
 namespace Proyecto__02;
-public class Astro:Omnibus,IPrecioPasaje,ILlega
+public class Astro:Omnibus,IPrecioPasaje
 {
-    int DiaDeSalida;
-    int HoraDeSalida;
+    public int DiaDeSalida{get;}
+    public int HoraDeSalida{get;}
     float precioPasaje;
     public Astro(int DiaDeSalida,int HoraDeSalida,string chapa,string chofer,
-                string destino,float km, int asientos):
+                Destinos destino,float km, int asientos):
                 base(chapa, chofer,destino,km, asientos)
     {
         this.DiaDeSalida = DiaDeSalida;
@@ -14,14 +14,29 @@ public class Astro:Omnibus,IPrecioPasaje,ILlega
     }
     public float PrecioPasaje(float km) => km*4;
     
-    public void Operaciones(ICollection pasajeros)
+    public void Operaciones(ICollection<PasajerosListaOficial> oficial,ICollection<PasajerosListaEspera> espera)
     {
-        for (int i = 0; i < pasajeros.Count; i++)
+        for (int i = 0; i < oficial.Count; i++)
         {
             if (this.Asientos == 0) break;
-            if(pasajeros[i] == this.Destino)
+            if(oficial[i].Destino == this.Destino)
             {
                 this.Asientos--;
+                PrecioPasaje(Km);
+            }
+        }
+
+        if(Asientos>0)
+        {
+            for (int i = 0; i < espera.Count; i++)
+            {
+                if (this.Asientos == 0) break;
+                if(espera[i].Destinos[0] == Destino ||
+                   espera[i].Destinos[1] == Destino ||
+                   espera[i].Destinos[2] == Destino)
+                   {
+                       this.Asientos--;
+                   }
             }
         }
     }
